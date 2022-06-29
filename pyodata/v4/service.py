@@ -1126,7 +1126,10 @@ class EntitySetProxy:
             if isinstance(content, int):
                 return content
 
-            entities = content['d']['results']
+            try:
+                entities = content['d']['results']
+            except KeyError:
+                entities = content['value']
 
             result = []
             for props in entities:
