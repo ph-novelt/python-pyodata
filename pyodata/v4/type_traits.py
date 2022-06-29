@@ -230,6 +230,9 @@ class EdmDateTimeOffsetTypTraits(EdmDoubleQuotesEncapsulatedTypTraits):
             if value[len(value) - 1] == 'Z':
                 value = value[:len(value) - 1] + "+0000"
 
+        # handle error: pyodata.exceptions.PyODataModelError: Cannot decode datetime from value 0000-00-00T00:00:00
+        if value == '0000-00-00T00:00:00':
+            return None
         try:
             value = datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f%z')
         except ValueError:
